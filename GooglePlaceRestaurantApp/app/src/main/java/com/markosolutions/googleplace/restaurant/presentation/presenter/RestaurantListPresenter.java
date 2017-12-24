@@ -27,6 +27,7 @@ public class RestaurantListPresenter {
     }
 
     public void getRestaurantList(double latitude, double longitude, String query) {
+        mRestaurantListView.onLoadingStarted();
         mRestaurantUseCase.getNearbyRestaurants(new RestaurantListObserver(), latitude, longitude, query);
     }
 
@@ -48,11 +49,11 @@ public class RestaurantListPresenter {
     private final class RestaurantListObserver extends DisposableObserver<ArrayList<GooglePlaceDetailsEntity>> {
 
         @Override public void onComplete() {
-
+            mRestaurantListView.onLoadingFinished();
         }
 
         @Override public void onError(Throwable e) {
-
+            mRestaurantListView.onLoadingFinished();
         }
 
         @Override public void onNext(ArrayList<GooglePlaceDetailsEntity> googlePlaceDetailsEntities) {

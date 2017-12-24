@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.markosolutions.googleplace.restaurant.data.entity.GooglePlaceDetailsEntity;
 import com.markosolutions.googleplace.restaurant.presentation.adapter.DividerItemDecoration;
@@ -40,6 +42,9 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
     public void onSortBestMatchClicked() {
         mRestaurantListPresenter.sortNearbyRestaurantsByBestMatch();
     }
+
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,12 +87,12 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
 
     @Override
     public void onLoadingStarted() {
-
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onLoadingFinished() {
-
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
