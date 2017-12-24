@@ -15,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import markosolutions.com.restaurant.R;
 
 public class HomeActivity extends AppCompatActivity implements RestaurantListView {
@@ -24,6 +25,21 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
 
     private RestaurantRecyclerViewAdapter mRestaurantRecyclerViewAdapter;
     private RestaurantListPresenter mRestaurantListPresenter;
+
+    @OnClick(R.id.sort_distance)
+    public void onSortDistanceClicked() {
+        mRestaurantListPresenter.sortNearbyRestaurantsByDistance();
+    }
+
+    @OnClick(R.id.sort_review)
+    public void onSortReviewClicked() {
+        mRestaurantListPresenter.sortNearbyRestaurantsByMostReviewed();
+    }
+
+    @OnClick(R.id.sort_best_match)
+    public void onSortBestMatchClicked() {
+        mRestaurantListPresenter.sortNearbyRestaurantsByBestMatch();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

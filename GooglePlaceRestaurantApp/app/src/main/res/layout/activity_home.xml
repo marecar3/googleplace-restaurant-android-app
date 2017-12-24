@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:fab="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -9,4 +10,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-</LinearLayout>
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        fab:menu_icon="@drawable/ic_sort_small">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/sort_best_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            fab:fab_size="normal"
+            android:src="@mipmap/ic_sort_best_match"
+            fab:fab_colorNormal="@android:color/darker_gray"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/sort_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="normal"
+            android:src="@mipmap/ic_sort_review"
+            fab:fab_colorNormal="@android:color/darker_gray"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/sort_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="normal"
+            android:src="@mipmap/ic_sort_distance"
+            fab:fab_colorNormal="@android:color/darker_gray"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>
