@@ -10,6 +10,9 @@ import io.realm.RealmObject;
 
 public class GooglePlaceDetailsEntity extends RealmObject {
 
+    @SerializedName("name")
+    private String mName;
+
     @SerializedName("geometry")
     private GeometryEntity mGeometryEntity;
 
@@ -105,5 +108,9 @@ public class GooglePlaceDetailsEntity extends RealmObject {
 
     public int getNumberOfReviews() {
         return mNumberOfReviews;
+    }
+
+    public String getName() {
+        return mName;
     }
 }

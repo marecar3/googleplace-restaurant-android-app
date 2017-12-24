@@ -12,6 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "API_BASE_URL", '"https://maps.googleapis.com/maps/api/place/"'
+        buildConfigField "String", "IMAGE_URL", '"https://maps.googleapis.com/maps/api/place/photo?maxwidth=144&maxheight=144&photoreference=%s&key=AIzaSyDqmth39lERiKXcihT1ZmGYnqjd5mfYJEQ"'
         buildConfigField "String", "GOOGLE_PLACE_API_KEY", '"AIzaSyDqmth39lERiKXcihT1ZmGYnqjd5mfYJEQ"'
     }
 
@@ -39,6 +40,8 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.0'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 apply plugin: 'realm-android'

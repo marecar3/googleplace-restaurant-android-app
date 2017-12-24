@@ -8,24 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
-public class UseCase {
+public class RestaurantUseCase {
 
     private GooglePlaceStore mGooglePlaceStore;
 
     private static final String GOOGLE_PLACE_TYPE_VALUE = "restaurant";
     private static final int GOOGLE_PLACE_RADIUS_VALUE = 500;
 
-    public UseCase() {
+    public RestaurantUseCase() {
         mGooglePlaceStore = new GooglePlaceStore();
     }
 
-    public Observable<ArrayList<GooglePlaceDetailsEntity>> getNearbyRestaurants
-            (double latitude,
+    public void getNearbyRestaurants
+            (DisposableObserver<ArrayList<GooglePlaceDetailsEntity>> observer,
+             double latitude,
              double longitude,
              String keyword) {
-        return mGooglePlaceStore.getNearbyRestaurants(latitude, longitude, keyword,
-                GOOGLE_PLACE_RADIUS_VALUE, GOOGLE_PLACE_TYPE_VALUE);
+
+        Observable<ArrayList<GooglePlaceDetailsEntity>> observable = mGooglePlaceStore.getNearbyRestaurants(latitude, longitude, keyword,
+                GOOGLE_PLACE_RADIUS_VALUE, GOOGLE_PLACE_TYPE_VALUE)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+                observable.subscribeWith(observer);
     }
 
     public GooglePlaceDetailsEntity getRestaurantDetails(String placeId) {

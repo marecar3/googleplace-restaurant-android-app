@@ -9,6 +9,9 @@ import io.realm.RealmObject;
 
 public class GooglePlaceEntity extends RealmObject {
 
+    @SerializedName("name")
+    private String mName;
+
     @SerializedName("geometry")
     private GeometryEntity mGeometryEntity;
 
@@ -58,4 +61,7 @@ public class GooglePlaceEntity extends RealmObject {
         return mGeometryEntity;
     }
 
+    public String getName() {
+        return mName;
+    }
 }
