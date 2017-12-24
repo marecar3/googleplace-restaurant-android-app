@@ -5,6 +5,9 @@
     <dimen name="restaurant_icon_size">56dp</dimen>
     <dimen name="restaurant_info_icon_size">15dp</dimen>
     <dimen name="progress_bar_size">100dp</dimen>
+    <dimen name="header_height">64dp</dimen>
+    <dimen name="search_field_width">100dp</dimen>
+    <dimen name="location_button_size">40dp</dimen>
 
     <dimen name="margin_xs">4dp</dimen>
     <dimen name="margin_s">8dp</dimen>

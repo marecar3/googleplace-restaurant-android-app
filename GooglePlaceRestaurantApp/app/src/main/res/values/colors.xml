@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="recycler_view_divider_color">#d8d8d8</color>
+    <color name="color_opened">#00ff00</color>
+    <color name="color_closed">#ff0000</color>
 </resources>

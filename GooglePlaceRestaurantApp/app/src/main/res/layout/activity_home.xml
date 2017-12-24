@@ -5,10 +5,38 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height"
+        android:background="@android:color/darker_gray">
+
+        <EditText
+            android:id="@+id/search_field"
+            android:layout_width="@dimen/search_field_width"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_s"
+            android:background="@android:color/white"
+            android:inputType="textNoSuggestions"
+            android:imeOptions="actionSearch"/>
+
+        <ImageView
+            android:id="@+id/location_button"
+            android:layout_width="@dimen/location_button_size"
+            android:layout_height="@dimen/location_button_size"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_s"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_sort_distance"/>
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/restaurant_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"/>
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu"

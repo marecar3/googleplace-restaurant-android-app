@@ -60,11 +60,22 @@ public class GooglePlaceStore {
                                     if (o instanceof ResponseDetailsEntity) {
                                         ResponseDetailsEntity responseDetailsEntity = (ResponseDetailsEntity)o;
                                         GooglePlaceDetailsEntity googlePlaceDetailsEntity = responseDetailsEntity.getGooglePlaceDetailsEntity();
-                                        double placeRestaurantLatitude = googlePlaceDetailsEntity.getGeometryEntity().getLocationEntity().getLatitude();
-                                        double placeRestaurantLongitude = googlePlaceDetailsEntity.getGeometryEntity().getLocationEntity().getLongitude();
-                                        double distance = Util.distance(latitude, longitude, placeRestaurantLatitude, placeRestaurantLongitude);
-                                        googlePlaceDetailsEntity.setDistance(distance);
-                                        googlePlaceDetailsEntity.setNumberOfReviews(googlePlaceDetailsEntity.getReviewEntities().size());
+
+                                        double placeRestaurantLatitude = googlePlaceDetailsEntity.getGeometryEntity() != null
+                                                && googlePlaceDetailsEntity.getGeometryEntity().getLocationEntity() != null ?
+                                                googlePlaceDetailsEntity.getGeometryEntity().getLocationEntity().getLatitude() : 0;
+
+                                        double placeRestaurantLongitude = googlePlaceDetailsEntity.getGeometryEntity() != null
+                                                && googlePlaceDetailsEntity.getGeometryEntity().getLocationEntity() != null ?
+                                                googlePlaceDetailsEntity.getGeometryEntity().getLocationEntity().getLongitude() : 0;
+
+                                        if (placeRestaurantLatitude != 0 && placeRestaurantLongitude != 0) {
+                                            double distance = Util.distance(latitude, longitude, placeRestaurantLatitude, placeRestaurantLongitude);
+                                            googlePlaceDetailsEntity.setDistance(distance);
+                                        }
+
+                                        int numberOfReviews = googlePlaceDetailsEntity.getReviewEntities() != null ? googlePlaceDetailsEntity.getReviewEntities().size() : 0;
+                                        googlePlaceDetailsEntity.setNumberOfReviews(numberOfReviews);
                                         placeRestaurantDetailsEntities.add(googlePlaceDetailsEntity);
                                     }
                                 }

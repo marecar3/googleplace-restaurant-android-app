@@ -12,8 +12,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "API_BASE_URL", '"https://maps.googleapis.com/maps/api/place/"'
-        buildConfigField "String", "IMAGE_URL", '"https://maps.googleapis.com/maps/api/place/photo?maxwidth=144&maxheight=144&photoreference=%s&key=AIzaSyDqmth39lERiKXcihT1ZmGYnqjd5mfYJEQ"'
-        buildConfigField "String", "GOOGLE_PLACE_API_KEY", '"AIzaSyDqmth39lERiKXcihT1ZmGYnqjd5mfYJEQ"'
+        buildConfigField "String", "IMAGE_URL", '"https://maps.googleapis.com/maps/api/place/photo?maxwidth=144&maxheight=144&photoreference=%s&key=AIzaSyDGnZCMm_gYQduCa8c52aJO98_PfNZRS5Q"'
+        buildConfigField "String", "GOOGLE_PLACE_API_KEY", '"AIzaSyDGnZCMm_gYQduCa8c52aJO98_PfNZRS5Q"'
+        manifestPlaceholders = [ PLACES_API_KEY:"AIzaSyAS8sDWwMYUPwzYuXnzueebK8xytzFv8Cs"]
     }
 
     buildTypes {
@@ -43,6 +44,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.clans:fab:1.6.4'
+    compile 'com.google.android.gms:play-services-places:11.6.0'
 }
 
 apply plugin: 'realm-android'

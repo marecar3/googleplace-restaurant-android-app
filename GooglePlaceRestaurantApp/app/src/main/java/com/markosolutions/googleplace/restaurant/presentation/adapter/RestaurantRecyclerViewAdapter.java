@@ -24,9 +24,14 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
 
     private Context mContext;
     private ArrayList<GooglePlaceDetailsEntity> mGooglePlaceEntities = new ArrayList<>(0);
+    private OnItemClickListener mOnItemClickListener;
 
     public RestaurantRecyclerViewAdapter(Context context) {
         mContext = context;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -68,9 +73,21 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         @BindView(R.id.review)
         TextView mReview;
 
+        @BindView(R.id.opened)
+        TextView mOpened;
+
         public RestaurantViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mOnItemClickListener != null) {
+                        GooglePlaceDetailsEntity googlePlaceDetailsEntity = mGooglePlaceEntities.get(getAdapterPosition());
+                        mOnItemClickListener.onItemClicked(googlePlaceDetailsEntity.getPlaceId());
+                    }
+                }
+            });
         }
 
         void bindView(GooglePlaceDetailsEntity googlePlaceDetailsEntity) {
@@ -87,6 +104,16 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
                     googlePlaceDetailsEntity.getPhotoEntities().size() > 0 ?
             String.format(BuildConfig.IMAGE_URL, googlePlaceDetailsEntity.getPhotoEntities().get(0).getPhotoReference()) : googlePlaceDetailsEntity.getIcon();
             Picasso.with(mContext).load(url).centerCrop().fit().into(mIcon);
+
+            String opened =
+                    googlePlaceDetailsEntity.getOpeningHoursEntity().isOpenNow() ?
+                            mContext.getResources().getString(R.string.restaurant_list_opened) :
+                            mContext.getResources().getString(R.string.restaurant_list_closed);
+            mOpened.setText(opened);
+            int openedColor = googlePlaceDetailsEntity.getOpeningHoursEntity().isOpenNow() ?
+                    mContext.getResources().getColor(R.color.color_opened) :
+                    mContext.getResources().getColor(R.color.color_closed);
+            mOpened.setTextColor(openedColor);
         }
     }
 
@@ -95,4 +122,7 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         mGooglePlaceEntities.addAll(restaurantList);
     }
 
+    public interface OnItemClickListener {
+        void onItemClicked(String placeId);
+    }
 }

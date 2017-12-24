@@ -17,7 +17,7 @@ public class RestaurantUseCase {
     private GooglePlaceStore mGooglePlaceStore;
 
     private static final String GOOGLE_PLACE_TYPE_VALUE = "restaurant";
-    private static final int GOOGLE_PLACE_RADIUS_VALUE = 500;
+    private static final int GOOGLE_PLACE_RADIUS_VALUE = 2000;
 
     public RestaurantUseCase() {
         mGooglePlaceStore = new GooglePlaceStore();

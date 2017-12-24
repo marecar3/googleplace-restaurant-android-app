@@ -31,7 +31,7 @@ public class GooglePlaceRealmCache implements GooglePlaceCache {
             case SortCriteria.BEST_MATCH :
                 return placeRestaurantDetailsEntities;
             case SortCriteria.DISTANCE:
-                return placeRestaurantDetailsEntities.sort("mDistance", Sort.DESCENDING);
+                return placeRestaurantDetailsEntities.sort("mDistance", Sort.ASCENDING);
             case SortCriteria.MOST_REVIEWED:
                 return placeRestaurantDetailsEntities.sort("mNumberOfReviews", Sort.DESCENDING);
             default:
@@ -43,8 +43,10 @@ public class GooglePlaceRealmCache implements GooglePlaceCache {
     @Override
     public GooglePlaceDetailsEntity getPlaceRestaurantDetailsEntity(String placeId) {
         Realm realm = Realm.getDefaultInstance();
-        realm.where(GooglePlaceDetailsEntity.class).equalTo("place_id", placeId);
-        return null;
+        GooglePlaceDetailsEntity googlePlaceDetailsEntity = realm.where(GooglePlaceDetailsEntity.class)
+                .equalTo("mPlaceId", placeId)
+                .findFirst();
+        return googlePlaceDetailsEntity;
     }
 
     @Override
