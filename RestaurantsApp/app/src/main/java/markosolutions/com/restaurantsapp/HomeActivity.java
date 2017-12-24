@@ -5,15 +5,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import markosolutions.com.restaurantsapp.data.api.RestaurantService;
-import markosolutions.com.restaurantsapp.data.api.ServiceGenerator;
-import markosolutions.com.restaurantsapp.data.entity.RestaurantsResponseEntity;
+import markosolutions.com.restaurantsapp.data.entity.PlaceRestaurantDetailsEntity;
+import markosolutions.com.restaurantsapp.domain.UseCase;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -29,22 +31,30 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        RestaurantService restaurantService = ServiceGenerator.createService(RestaurantService.class);
+        final UseCase useCase = new UseCase();
 
-        Observable<RestaurantsResponseEntity> observable = restaurantService.
-                getNearbyRestaurants("-33.8670522,151.1957362", 500, "restaurant")
+        Observable<ArrayList<PlaceRestaurantDetailsEntity>> observable =
+                useCase.getNearbyRestaurants(-33.8670522,151.1957362, "pizza")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
-            observable.subscribeWith(new Observer<RestaurantsResponseEntity>() {
+            observable.subscribeWith(new Observer<ArrayList<PlaceRestaurantDetailsEntity>>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(RestaurantsResponseEntity restaurantsResponseEntity) {
-                Log.e("ivasavic", "count : " + restaurantsResponseEntity.getPlaceRestaurantEntities().size());
+            public void onNext(ArrayList<PlaceRestaurantDetailsEntity> placeRestaurantDetailsEntities) {
+                for (PlaceRestaurantDetailsEntity placeRestaurantDetailsEntity : placeRestaurantDetailsEntities) {
+                    Log.e("ivasavic", "count " + placeRestaurantDetailsEntity.getDistance());
+                }
+
+                List<PlaceRestaurantDetailsEntity> list =
+                        useCase.sortNearbyRestaurantsByDistance();
+                for (PlaceRestaurantDetailsEntity placeRestaurantDetailsEntity : list) {
+                    Log.e("ivasavic", "count " + placeRestaurantDetailsEntity.getDistance());
+                }
             }
 
             @Override
@@ -57,6 +67,71 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        //ChIJcSImzzCuEmsRcewmeMbMSz8
+
+//        Observable<RestaurantDetailsResponseEntity> observable =
+//                restAPI.getRestaurantDetails("ChIJcSImzzCuEmsRcewmeMbMSz8")
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread());
+//
+//        observable.subscribeWith(new Observer<RestaurantDetailsResponseEntity>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(RestaurantDetailsResponseEntity restaurantsResponseEntity) {
+//                Log.e("ivasavic", "count : " + restaurantsResponseEntity.getPlaceRestaurantEntity().getOpeningHoursEntity().getWeekdayText());
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
+
+
+//        List<Observable<Integer>> observables =
+//                new ArrayList<>();
+//        observables.add(Observable.fromArray(1, 2, 3));
+//        observables.add(Observable.fromArray(1, 2, 3));
+//
+//        Observable<Object> observable = Observable.zip(observables, new Function<Object[], Object>() {
+//            @Override
+//            public Object apply(Object[] o) throws Exception {
+//                return null;
+//            }
+//        }).subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread());
+//
+//        observable.subscribeWith(new Observer<Object>() {
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(Object restaurantsResponseEntity) {
+//                Log.e("ivasavic", "count : " + restaurantsResponseEntity);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//        });
 
     }
 }

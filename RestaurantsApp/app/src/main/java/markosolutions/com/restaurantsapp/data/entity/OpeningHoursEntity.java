@@ -2,21 +2,24 @@ package markosolutions.com.restaurantsapp.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class OpeningHoursEntity {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+public class OpeningHoursEntity extends RealmObject {
 
     @SerializedName("open_now")
     private boolean mIsOpenNow;
 
     @SerializedName("weekday_text")
-    private ArrayList<String> mWeekdayText;
+    private RealmList<String> mWeekdayText;
 
     public boolean isOpenNow() {
         return mIsOpenNow;
     }
 
-    public ArrayList<String> getWeekdayText() {
+    public List<String> getWeekdayText() {
         return mWeekdayText;
     }
 }

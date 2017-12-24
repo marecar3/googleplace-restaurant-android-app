@@ -3,7 +3,9 @@ package markosolutions.com.restaurantsapp.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LocationEntity {
+import io.realm.RealmObject;
+
+public class LocationEntity extends RealmObject {
 
     @SerializedName("lat")
     private double mLatitude;

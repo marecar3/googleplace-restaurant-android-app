@@ -2,7 +2,9 @@ package markosolutions.com.restaurantsapp.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PhotoEntity {
+import io.realm.RealmObject;
+
+public class PhotoEntity extends RealmObject {
 
     @SerializedName("height")
     private int mHeight;

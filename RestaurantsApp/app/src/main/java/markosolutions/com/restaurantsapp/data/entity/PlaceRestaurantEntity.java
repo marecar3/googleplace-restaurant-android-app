@@ -2,9 +2,10 @@ package markosolutions.com.restaurantsapp.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-public class PlaceRestaurantEntity {
+public class PlaceRestaurantEntity extends RealmObject {
 
     @SerializedName("geometry")
     private GeometryEntity mGeometryEntity;
@@ -19,7 +20,7 @@ public class PlaceRestaurantEntity {
     private OpeningHoursEntity mOpeningHoursEntity;
 
     @SerializedName("photos")
-    private ArrayList<PhotoEntity> mPhotoEntities;
+    private RealmList<PhotoEntity> mPhotoEntities;
 
     @SerializedName("place_id")
     private String mPlaceId;
@@ -27,7 +28,29 @@ public class PlaceRestaurantEntity {
     @SerializedName("rating")
     private float mRating;
 
-    @SerializedName("")
+    public String getIcon() {
+        return mIcon;
+    }
+
+    public String getId() {
+        return mId;
+    }
+
+    public OpeningHoursEntity getOpeningHoursEntity() {
+        return mOpeningHoursEntity;
+    }
+
+    public RealmList<PhotoEntity> getPhotoEntities() {
+        return mPhotoEntities;
+    }
+
+    public String getPlaceId() {
+        return mPlaceId;
+    }
+
+    public float getRating() {
+        return mRating;
+    }
 
     public GeometryEntity getGeometryEntity() {
         return mGeometryEntity;

@@ -2,7 +2,9 @@ package markosolutions.com.restaurantsapp.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ReviewEntity {
+import io.realm.RealmObject;
+
+public class ReviewEntity extends RealmObject {
 
     @SerializedName("author_name")
     private String mAuthorName;

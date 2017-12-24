@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 public class RestaurantDetailsResponseEntity extends BaseResponseEntity {
 
     @SerializedName("result")
-    private PlaceRestaurantEntity mPlaceRestaurantEntity;
+    private PlaceRestaurantDetailsEntity mPlaceRestaurantDetailsEntity;
 
-    public PlaceRestaurantEntity getPlaceRestaurantEntity() {
-        return mPlaceRestaurantEntity;
+    public PlaceRestaurantDetailsEntity getPlaceRestaurantDetailsEntity() {
+        return mPlaceRestaurantDetailsEntity;
     }
 }
