@@ -7,9 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
-import markosolutions.com.restaurantsapp.data.entity.PlaceRestaurantDetailsEntity;
+import markosolutions.com.restaurantsapp.data.entity.GooglePlaceDetailsEntity;
 
-public interface PlaceRestaurantCache {
+public interface GooglePlaceCache {
 
     @IntDef({SortCriteria.BEST_MATCH, SortCriteria.DISTANCE, SortCriteria.MOST_REVIEWED})
     @Retention(RetentionPolicy.SOURCE)
@@ -20,8 +20,8 @@ public interface PlaceRestaurantCache {
     }
 
 
-    void put(ArrayList<PlaceRestaurantDetailsEntity> placeRestaurantDetailsEntities);
+    void put(ArrayList<GooglePlaceDetailsEntity> placeRestaurantDetailsEntities);
     void clear();
-    List<PlaceRestaurantDetailsEntity> getSortedPlaceRestaurantEntities(@SortCriteria int sortCriteria);
-    PlaceRestaurantDetailsEntity getPlaceRestaurantDetailsEntity(String placeId);
+    List<GooglePlaceDetailsEntity> getSortedPlaceRestaurantEntities(@SortCriteria int sortCriteria);
+    GooglePlaceDetailsEntity getPlaceRestaurantDetailsEntity(String placeId);
 }

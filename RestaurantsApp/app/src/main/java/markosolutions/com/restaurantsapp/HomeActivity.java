@@ -14,7 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import markosolutions.com.restaurantsapp.data.entity.PlaceRestaurantDetailsEntity;
+import markosolutions.com.restaurantsapp.data.entity.GooglePlaceDetailsEntity;
 import markosolutions.com.restaurantsapp.domain.UseCase;
 
 
@@ -33,27 +33,27 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         final UseCase useCase = new UseCase();
 
-        Observable<ArrayList<PlaceRestaurantDetailsEntity>> observable =
+        Observable<ArrayList<GooglePlaceDetailsEntity>> observable =
                 useCase.getNearbyRestaurants(-33.8670522,151.1957362, "pizza")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
 
-            observable.subscribeWith(new Observer<ArrayList<PlaceRestaurantDetailsEntity>>() {
+            observable.subscribeWith(new Observer<ArrayList<GooglePlaceDetailsEntity>>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(ArrayList<PlaceRestaurantDetailsEntity> placeRestaurantDetailsEntities) {
-                for (PlaceRestaurantDetailsEntity placeRestaurantDetailsEntity : placeRestaurantDetailsEntities) {
-                    Log.e("ivasavic", "count " + placeRestaurantDetailsEntity.getDistance());
+            public void onNext(ArrayList<GooglePlaceDetailsEntity> placeRestaurantDetailsEntities) {
+                for (GooglePlaceDetailsEntity googlePlaceDetailsEntity : placeRestaurantDetailsEntities) {
+                    Log.e("ivasavic", "count " + googlePlaceDetailsEntity.getDistance());
                 }
 
-                List<PlaceRestaurantDetailsEntity> list =
+                List<GooglePlaceDetailsEntity> list =
                         useCase.sortNearbyRestaurantsByDistance();
-                for (PlaceRestaurantDetailsEntity placeRestaurantDetailsEntity : list) {
-                    Log.e("ivasavic", "count " + placeRestaurantDetailsEntity.getDistance());
+                for (GooglePlaceDetailsEntity googlePlaceDetailsEntity : list) {
+                    Log.e("ivasavic", "count " + googlePlaceDetailsEntity.getDistance());
                 }
             }
 
@@ -70,19 +70,19 @@ public class HomeActivity extends AppCompatActivity {
 
         //ChIJcSImzzCuEmsRcewmeMbMSz8
 
-//        Observable<RestaurantDetailsResponseEntity> observable =
+//        Observable<ResponseDetailsEntity> observable =
 //                restAPI.getRestaurantDetails("ChIJcSImzzCuEmsRcewmeMbMSz8")
 //                        .subscribeOn(Schedulers.io())
 //                        .observeOn(AndroidSchedulers.mainThread());
 //
-//        observable.subscribeWith(new Observer<RestaurantDetailsResponseEntity>() {
+//        observable.subscribeWith(new Observer<ResponseDetailsEntity>() {
 //            @Override
 //            public void onSubscribe(Disposable d) {
 //
 //            }
 //
 //            @Override
-//            public void onNext(RestaurantDetailsResponseEntity restaurantsResponseEntity) {
+//            public void onNext(ResponseDetailsEntity restaurantsResponseEntity) {
 //                Log.e("ivasavic", "count : " + restaurantsResponseEntity.getPlaceRestaurantEntity().getOpeningHoursEntity().getWeekdayText());
 //            }
 //

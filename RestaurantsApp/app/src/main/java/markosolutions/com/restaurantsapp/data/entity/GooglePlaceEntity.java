@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-public class PlaceRestaurantEntity extends RealmObject {
+public class GooglePlaceEntity extends RealmObject {
 
     @SerializedName("geometry")
     private GeometryEntity mGeometryEntity;

@@ -4,7 +4,7 @@ import android.app.Application;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import markosolutions.com.restaurantsapp.data.datasource.realm.PlaceRestaurantRealmMigration;
+import markosolutions.com.restaurantsapp.data.datasource.realm.GooglePlaceRealmMigration;
 
 public class PlaceRestaurantApplication extends Application {
 
@@ -19,7 +19,7 @@ public class PlaceRestaurantApplication extends Application {
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .schemaVersion(1)
-                .migration(new PlaceRestaurantRealmMigration()).build();
+                .migration(new GooglePlaceRealmMigration()).build();
         Realm.setDefaultConfiguration(config);
     }
 }

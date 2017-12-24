@@ -4,7 +4,7 @@ android {
 
     compileSdkVersion 26
     defaultConfig {
-        applicationId "markosolutions.com.restaurantsapp"
+        applicationId "com.markosolutions.googleplace.restaurant"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1

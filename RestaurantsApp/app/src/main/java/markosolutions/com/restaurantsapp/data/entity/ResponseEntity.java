@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class RestaurantsResponseEntity extends BaseResponseEntity {
+public class ResponseEntity extends BaseResponseEntity {
 
     @SerializedName("results")
-    private ArrayList<PlaceRestaurantEntity> mPlaceRestaurantEntities;
+    private ArrayList<GooglePlaceEntity> mPlaceRestaurantEntities;
 
     @SerializedName("next_page_token")
     private String mNextPageToken;
 
-    public ArrayList<PlaceRestaurantEntity> getPlaceRestaurantEntities() {
+    public ArrayList<GooglePlaceEntity> getPlaceRestaurantEntities() {
         return mPlaceRestaurantEntities;
     }
 

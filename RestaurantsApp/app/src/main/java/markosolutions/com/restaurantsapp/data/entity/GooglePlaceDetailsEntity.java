@@ -8,7 +8,7 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-public class PlaceRestaurantDetailsEntity extends RealmObject {
+public class GooglePlaceDetailsEntity extends RealmObject {
 
     @SerializedName("geometry")
     private GeometryEntity mGeometryEntity;
