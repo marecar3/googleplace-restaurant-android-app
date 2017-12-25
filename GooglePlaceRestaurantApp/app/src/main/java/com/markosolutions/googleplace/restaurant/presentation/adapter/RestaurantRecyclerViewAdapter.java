@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.markosolutions.googleplace.restaurant.data.entity.GooglePlaceDetailsEntity;
+import com.markosolutions.googleplace.restaurant.data.entity.OpeningHoursEntity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -105,12 +106,15 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
             String.format(BuildConfig.IMAGE_URL, googlePlaceDetailsEntity.getPhotoEntities().get(0).getPhotoReference()) : googlePlaceDetailsEntity.getIcon();
             Picasso.with(mContext).load(url).centerCrop().fit().into(mIcon);
 
+            OpeningHoursEntity openingHoursEntity = googlePlaceDetailsEntity.getOpeningHoursEntity();
+            if (openingHoursEntity == null) return;
+
             String opened =
-                    googlePlaceDetailsEntity.getOpeningHoursEntity().isOpenNow() ?
+                    openingHoursEntity.isOpenNow() ?
                             mContext.getResources().getString(R.string.restaurant_list_opened) :
                             mContext.getResources().getString(R.string.restaurant_list_closed);
             mOpened.setText(opened);
-            int openedColor = googlePlaceDetailsEntity.getOpeningHoursEntity().isOpenNow() ?
+            int openedColor = openingHoursEntity.isOpenNow() ?
                     mContext.getResources().getColor(R.color.color_opened) :
                     mContext.getResources().getColor(R.color.color_closed);
             mOpened.setTextColor(openedColor);
