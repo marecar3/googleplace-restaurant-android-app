@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +33,8 @@ import butterknife.OnClick;
 import markosolutions.com.restaurant.R;
 
 public class HomeActivity extends AppCompatActivity implements RestaurantListView, RestaurantRecyclerViewAdapter.OnItemClickListener {
+
+    private static final String TAG = "HomeActivity";
 
     private static final int REQUEST_SELECT_PLACE = 0x100;
 
@@ -64,7 +67,6 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
 
     private LatLng mLastLatLng;
 
-
     @BindView(R.id.search_view)
     MaterialSearchView mMaterialSearchView;
 
@@ -93,6 +95,7 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
     }
 
     private void init() {
+        mLastLatLng = new LatLng(NEW_YORK_LATITUDE, NEW_YORK_LONGITUDE);
         mRestaurantListPresenter = new RestaurantListPresenter();
         addSearchViewListener();
         initRecycler();
@@ -103,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mMaterialSearchView.closeSearch();
-                mRestaurantListPresenter.getRestaurantList(NEW_YORK_LATITUDE, NEW_YORK_LONGITUDE, query);
+                mRestaurantListPresenter.getRestaurantList(mLastLatLng.latitude, mLastLatLng.longitude, query);
                 return true;
             }
 
@@ -141,21 +144,10 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
         mRestaurantRecyclerViewAdapter.setOnItemClickListener(this);
     }
 
-//    private void executeSearch() {
-//        if (mLastLatLng == null) return;
-//        String query = mSearchField.getText().toString();
-//
-//        mRestaurantListPresenter.getRestaurantList
-//                (mLastLatLng.latitude,
-//                mLastLatLng.longitude,
-//                query);
-//    }
-
     @Override
     protected void onPause() {
         mRestaurantListPresenter.detach();
         mRestaurantRecyclerViewAdapter.setOnItemClickListener(null);
-        mLastLatLng = null;
         super.onPause();
     }
 
@@ -166,6 +158,7 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
                 mLastLatLng = place.getLatLng();
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.e(TAG, "error getting location " + status);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
