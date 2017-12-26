@@ -1,19 +1,16 @@
 package com.markosolutions.googleplace.restaurant.presentation.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -25,6 +22,7 @@ import com.markosolutions.googleplace.restaurant.data.entity.GooglePlaceDetailsE
 import com.markosolutions.googleplace.restaurant.presentation.adapter.DividerItemDecoration;
 import com.markosolutions.googleplace.restaurant.presentation.adapter.RestaurantRecyclerViewAdapter;
 import com.markosolutions.googleplace.restaurant.presentation.presenter.RestaurantListPresenter;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
 
@@ -64,15 +62,14 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
 
-    @BindView(R.id.search_field)
-    EditText mSearchField;
-
     private LatLng mLastLatLng;
 
-    @OnClick(R.id.location_button)
-    public void onLocationButtonClicked() {
-        openAutocompleteModal();
-    }
+
+    @BindView(R.id.search_view)
+    MaterialSearchView mMaterialSearchView;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private void openAutocompleteModal() {
         try {
@@ -91,25 +88,41 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
         init();
     }
 
     private void init() {
         mRestaurantListPresenter = new RestaurantListPresenter();
-        listenKeyboardButton();
+        addSearchViewListener();
         initRecycler();
     }
 
-    private void listenKeyboardButton() {
-        mSearchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+    private void addSearchViewListener() {
+        mMaterialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    hideKeyboard();
-                    mRestaurantListPresenter.getRestaurantList(NEW_YORK_LATITUDE, NEW_YORK_LONGITUDE, v.getText().toString());
-                    return true;
-                }
+            public boolean onQueryTextSubmit(String query) {
+                mMaterialSearchView.closeSearch();
+                mRestaurantListPresenter.getRestaurantList(NEW_YORK_LATITUDE, NEW_YORK_LONGITUDE, query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
                 return false;
+            }
+        });
+
+        mMaterialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
             }
         });
     }
@@ -126,18 +139,17 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
         super.onResume();
         mRestaurantListPresenter.attach(this);
         mRestaurantRecyclerViewAdapter.setOnItemClickListener(this);
-        executeSearch();
     }
 
-    private void executeSearch() {
-        if (mLastLatLng == null) return;
-        String query = mSearchField.getText().toString();
-
-        mRestaurantListPresenter.getRestaurantList
-                (mLastLatLng.latitude,
-                mLastLatLng.longitude,
-                query);
-    }
+//    private void executeSearch() {
+//        if (mLastLatLng == null) return;
+//        String query = mSearchField.getText().toString();
+//
+//        mRestaurantListPresenter.getRestaurantList
+//                (mLastLatLng.latitude,
+//                mLastLatLng.longitude,
+//                query);
+//    }
 
     @Override
     protected void onPause() {
@@ -180,14 +192,6 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
         mProgressBar.setVisibility(View.GONE);
     }
 
-    private void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
     @Override
     public void onItemClicked(String placeId) {
         openDetails(placeId);
@@ -197,5 +201,24 @@ public class HomeActivity extends AppCompatActivity implements RestaurantListVie
         Intent intent = new Intent(this, RestaurantDetailsActivity.class);
         intent.putExtra(RestaurantDetailsActivity.GOOGLE_PLACE_ID_KEY, placeId);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        mMaterialSearchView.setMenuItem(menu.findItem(R.id.action_search));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_location :
+                openAutocompleteModal();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
